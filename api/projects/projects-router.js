@@ -12,4 +12,15 @@ router.get('/', async (req, res) => {
     }
 })
 
+router.get('/:id', async (req, res) => {
+    const project = await Projects.get(req.params.id);
+    if (!project) {
+        res.status(404).json({
+            message: "project not found"
+        })
+    } else {
+        res.status(200).json(project);
+    }
+})
+
 module.exports = router;
