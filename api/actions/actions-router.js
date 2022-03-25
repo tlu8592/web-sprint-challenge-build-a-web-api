@@ -28,4 +28,11 @@ router.delete('/:id', (req, res) => {
     
 })
 
+router.use((err, req, res, next) => {
+    res.status(500).json({
+        message: "error in actions router",
+        err: err.message
+    })
+})
+
 module.exports = router;
