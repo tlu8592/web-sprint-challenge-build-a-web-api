@@ -8,6 +8,7 @@ async function validateProjectId (req, res, next) {
             message: "project not found"
         });
     } else {
+        req.project = projectFound;
         next();
     }
 }
