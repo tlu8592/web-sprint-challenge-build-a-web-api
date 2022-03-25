@@ -2,6 +2,11 @@
 const express = require('express');
 const Projects = require('./projects-model');
 const router = express.Router();
+const { 
+    validateProjectId,
+    validateProjectUpdate 
+} = require('./projects-middleware');
+const res = require('express/lib/response');
 
 router.get('/', async (req, res) => {
     const projects = await Projects.get();
@@ -41,6 +46,33 @@ router.post('/', (req, res) => {
                 })
             })
     }
+})
+
+router.put('/:id', validateProjectId, async (req, res, next) => {
+    try {
+        const { name, description, completed } = req.body;
+        const updatedProject = await Projects.update(req.params.id, req.body);
+        if (!name || !description || !completed) {
+            res.status(400).json({
+                message: "missing fields: name, description, or completed",
+                err: err.message
+            });
+        } else {
+            res.json(updatedProject);
+            console.log("updatedProject -->", updatedProject)
+            // const project = await Projects.get(req.params.id);
+            // res.status(200).json(project);
+        }
+    } catch (err) {
+        next();
+    }
+})
+
+router.use((err, req, res, next) => {
+    res.status(500).json({
+        message: "error in projects router",
+        err: err.message
+    })
 })
 
 module.exports = router;
