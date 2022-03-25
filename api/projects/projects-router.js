@@ -77,6 +77,19 @@ router.delete('/:id', validateProjectId, async (req, res, next) => {
     }
 })
 
+router.get('/:id/actions', validateProjectId, async (req, res, next) => {
+    try {
+        const projectActions = await Projects.getProjectActions(req.params.id);
+        if (!projectActions) {
+            res.status(404).json([]);
+        } else {
+            res.status(200).json(projectActions);
+        }
+    } catch (err) {
+        next(err);
+    }
+})
+
 router.use((err, req, res, next) => {
     res.status(500).json({
         message: "error in projects router",
