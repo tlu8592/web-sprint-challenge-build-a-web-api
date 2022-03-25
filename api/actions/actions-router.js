@@ -24,7 +24,27 @@ router.get('/:id', validateActionId, async (req, res, next) => {
 })
 
 router.post('/', (req, res) => {
-    
+    const newAction = req.body;
+    if (!newAction.notes || !newAction.description || !newAction.project_id) {
+        res.status(400).json({
+            message: "project id, description, and notes are required"
+        })
+    } else if (newAction.description.length > 128) {
+        res.status(400).json({
+            message: "description can be up to 128 characters long"
+        })
+    } else {
+        Actions.insert(newAction)
+            .then(actionCreated => {
+                res.status(201).json(actionCreated);
+            })
+            .catch(err => {
+                req.status(500).json({
+                    message: "error creating action",
+                    err: err.message
+                })
+            })
+    }
 })
 
 router.put('/:id', (req, res) => {
