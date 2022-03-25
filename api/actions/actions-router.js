@@ -3,7 +3,8 @@ const express = require('express');
 const Actions = require('./actions-model');
 const router = express.Router();
 const {
-    validateActionId
+    validateActionId,
+    validateActionUpdate
 } = require('./actions-middlware');
 
 router.get('/', async (req, res) => {
@@ -47,8 +48,12 @@ router.post('/', (req, res) => {
     }
 })
 
-router.put('/:id', (req, res) => {
-    
+router.put('/:id', validateActionId, validateActionUpdate, (req, res, next) => {
+    Actions.update(req.params.id, req.action)
+        .then(updatedAction => {
+            res.status(200).json(updatedAction);
+        })
+        .catch(err => next(err));
 })
 
 router.delete('/:id', (req, res) => {
