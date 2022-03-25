@@ -6,7 +6,6 @@ const {
     validateProjectId,
     validateProjectUpdate 
 } = require('./projects-middleware');
-const res = require('express/lib/response');
 
 router.get('/', async (req, res) => {
     const projects = await Projects.get();
