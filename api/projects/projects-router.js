@@ -72,7 +72,7 @@ router.delete('/:id', validateProjectId, async (req, res, next) => {
         await Projects.remove(req.params.id);
         res.json(req.project);
     } catch (err) {
-        next(err);
+        next();
     }
 })
 
@@ -85,7 +85,7 @@ router.get('/:id/actions', validateProjectId, async (req, res, next) => {
             res.status(200).json(projectActions);
         }
     } catch (err) {
-        next(err);
+        next();
     }
 })
 

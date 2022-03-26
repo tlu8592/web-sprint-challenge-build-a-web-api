@@ -20,7 +20,7 @@ router.get('/:id', validateActionId, async (req, res, next) => {
     try {
         res.status(200).json(req.action);
     } catch (err) {
-        next(err);
+        next();
     }
 })
 
@@ -49,11 +49,11 @@ router.post('/', (req, res) => {
 })
 
 router.put('/:id', validateActionId, validateActionUpdate, (req, res, next) => {
-    Actions.update(req.params.id, req.action)
+    Actions.update(req.params.id, req.body)
         .then(updatedAction => {
             res.status(200).json(updatedAction);
         })
-        .catch(err => next(err));
+        .catch(next);
 })
 
 router.delete('/:id', validateActionId, async (req, res, next) => {
@@ -61,7 +61,7 @@ router.delete('/:id', validateActionId, async (req, res, next) => {
         await Actions.remove(req.params.id);
         res.json(req.action);
     } catch (err) {
-        next(err);
+        next();
     }
 })
 
