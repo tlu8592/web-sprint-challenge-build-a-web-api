@@ -14,8 +14,8 @@ async function validateActionId (req, res, next) {
 }
 
 function validateActionUpdate (req, res, next) {
-    const { name, description, completed, project_id } = req.body;
-    if (!name || !description || !completed || project_id) {
+    const { notes, description, completed, project_id } = req.body;
+    if (!notes || !description || !completed || project_id) {
         res.status(400).json({
             message: "provide notes, description, completed, or project_id for update"
         })
