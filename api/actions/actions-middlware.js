@@ -13,6 +13,22 @@ async function validateActionId (req, res, next) {
     }
 }
 
+function validateAction (req, res, next) {
+    const newAction = req.body;
+    if (!newAction.notes || !newAction.description || !newAction.project_id) {
+        res.status(400).json({
+            message: "project id, description, and notes are required"
+        })
+    } else if (newAction.description.length > 128) {
+        res.status(400).json({
+            message: "description can be up to 128 characters long"
+        })
+    } else {
+        req.newAction = newAction;
+        next();
+    } 
+}
+
 function validateActionUpdate (req, res, next) {
     const { notes, description, completed, project_id } = req.body;
     if (!notes || !description || !completed || project_id) {
@@ -26,5 +42,6 @@ function validateActionUpdate (req, res, next) {
 
 module.exports = {
     validateActionId,
+    validateAction,
     validateActionUpdate
 }
