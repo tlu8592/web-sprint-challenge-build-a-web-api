@@ -92,22 +92,22 @@ The description of the structure and extra information about each _resource_ sto
 
 #### Projects
 
-| Field       | Data Type | Metadata                                                                    |
-| ----------- | --------- | --------------------------------------------------------------------------- |
-| id          | number    | do not provide it when creating projects, the database will generate it     |
-| name        | string    | required                                                                    |
-| description | string    | required                                                                    |
-| completed   | boolean   | not required, defaults to false when creating projects                      |
+| Field       | Data Type | Metadata                                                                |
+| ----------- | --------- | ----------------------------------------------------------------------- |
+| id          | number    | do not provide it when creating projects, the database will generate it |
+| name        | string    | required                                                                |
+| description | string    | required                                                                |
+| completed   | boolean   | not required, defaults to false when creating projects                  |
 
 #### Actions
 
-| Field       | Data Type | Metadata                                                                                         |
-| ----------- | --------- | ------------------------------------------------------------------------------------------------ |
-| id          | number    | do not provide it when creating actions, the database will generate it                           |
-| project_id  | number    | required, must be the id of an existing project                                                  |
-| description | string    | required, up to 128 characters long                                                              |
-| notes       | string    | required, no size limit. Used to record additional notes or requirements to complete the action  |
-| completed   | boolean   | not required, defaults to false when creating actions                                            |
+| Field       | Data Type | Metadata                                                                                        |
+| ----------- | --------- | ----------------------------------------------------------------------------------------------- |
+| id          | number    | do not provide it when creating actions, the database will generate it                          |
+| project_id  | number    | required, must be the id of an existing project                                                 |
+| description | string    | required, up to 128 characters long                                                             |
+| notes       | string    | required, no size limit. Used to record additional notes or requirements to complete the action |
+| completed   | boolean   | not required, defaults to false when creating actions                                           |
 
 ### Database Persistence Helpers
 
@@ -147,7 +147,31 @@ We have provided test data for all the resources.
 Be prepared to demonstrate your understanding of this week's concepts by answering questions on the following topics. You might prepare by writing down your own answers before hand.
 
 1. The core features of Node.js and Express and why they are useful.
+
+Node.js uses the same language and paradigm of JavaScript, therefore it reduces context switching between the client and server. It is single-threaded, which relieves us from the
+tedious and complex work in handling multiple threads. Since Node.js is asynchronous, that allows us to exploit the processor that it's running, which is important since the node process
+will be running on one sole CPU.
+Express is a node module that simplifies the writing of server code. There is no need to write
+a request handler function, which takes the request and resolve objects as arguments, to create
+a server. All it is needed is to declare a variable called server and set it to the invocation
+of the express module: express() once it's been required. The features of Express include middleware, routing, routers for application modularlity, convenience helpers, and views. Middleware functions take the requests and response objects, operate on them, and execute any specified action (i.e., logging or security). Routing involves selecting which request handler function gets to run based on the URL and HTTP method. It gives way to break the application into parts. Routers is also another way of breaking applications into parts (i.e., one router for the SPA and one for the API). A router would have its own middleware and routing, which improves functionality. Convenience helpers, such as res.status, res.send, and req.ip, give functionality to make writing web apps and serverse easier. Views allow the ability to render HTML dynamically on the server and make use of it using other languages.
+
 1. Understand and explain the use of Middleware.
+
+Middleware is used to extend the functionality of the Express module. With each middleware, it enables access to the HTTP request and response for the path. Express may have built-in middleware. The developer does have the ability to write custom middleware, making the code less repetitive, simply by writing a function and make use of it in multiple routes.
+
 1. The basic principles of the REST architectural style.
+
+-Everything is a resource.
+-Each resource is accesible via a unique URL.
+-Resources can have multiple representations.
+-Communication happens over a stateless protocol (HTTP).
+-Resource management happens via HTTP methods
+
 1. Understand and explain the use of Express Routers.
+
+Express Router has its own middleware and routing, however it must be used within an Express app. The use of Express Routers is to breakdown the app into parts: i.e., one router for an electronics section on an e-commerce website, one for furniture.
+
 1. Describe tooling used to manually test the correctness of an API.
+
+Postman is one of the tools used to manually test the correctness of an API. It has features that makes API testing less arduous: i.e., the ability to select and change the HTTP method for the request and add JSON to the body.
