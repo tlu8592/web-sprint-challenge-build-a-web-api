@@ -2,10 +2,7 @@
 const express = require('express');
 const Projects = require('./projects-model');
 const router = express.Router();
-const { 
-    validateProjectId,
-    validateProjectUpdate 
-} = require('./projects-middleware');
+const { validateProjectId } = require('./projects-middleware');
 
 router.get('/', async (req, res) => {
     const projects = await Projects.get();
@@ -58,9 +55,6 @@ router.put('/:id', validateProjectId, async (req, res, next) => {
             });
         } else {
             res.json(updatedProject);
-            console.log("updatedProject -->", updatedProject)
-            // const project = await Projects.get(req.params.id);
-            // res.status(200).json(project);
         }
     } catch (err) {
         next();
